@@ -1,0 +1,66 @@
+<div class="content">
+  <div class="container">
+    <mat-toolbar color="primary">
+      <span>Contacts</span>
+    </mat-toolbar>
+    <mat-card *ngIf="people != null">
+      <table mat-table [dataSource]="people" class="mat-elevation-z8">
+        <!-- name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- age Column -->
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+        </ng-container>
+
+        <!-- Positition Column -->
+        <ng-container matColumnDef="emailAddress">
+          <th mat-header-cell *matHeaderCellDef> Email Address </th>
+          <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="editPerson(element)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="deletePerson(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div *ngIf="editingPerson">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput [value]="editingPerson.name" (change)="nameChanged($event.target)">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Phone Number</mat-label>
+          <input matInput [value]="editingPerson.phoneNumber" (change)="phoneNumberChanged($event.target)">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email Address</mat-label>
+          <input matInput [value]="editingPerson.emailAddress" (change)="emailAddressChanged($event.target)">
+        </mat-form-field>
+        <button mat-raised-button (click)="doneEditing()" color="primary">Save</button>
+      </div>
+
+      <mat-card-actions>
+        <button mat-raised-button (click)="addPerson()" color="primary">Add a new contact</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card *ngElse>
+      Loading...
+    </mat-card>
+  </div>
+</div>
